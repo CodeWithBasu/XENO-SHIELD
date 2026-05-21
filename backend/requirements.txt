@@ -4,3 +4,6 @@ scikit-learn
 pandas
 numpy
 scapy
+motor
+pymongo[srv]
+python-dotenv
