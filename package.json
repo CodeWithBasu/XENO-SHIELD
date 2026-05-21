@@ -1,0 +1,14 @@
+{
+  "name": "xeno-shield",
+  "version": "1.0.0",
+  "description": "Alien Intrusion Detection System",
+  "scripts": {
+    "install:all": "cd frontend && npm install && cd ../backend && .\\venv\\Scripts\\activate && pip install -r requirements.txt",
+    "dev:frontend": "cd frontend && npm run dev",
+    "dev:backend": "cd backend && .\\venv\\Scripts\\activate && python main.py",
+    "dev": "concurrently \"npm run dev:backend\" \"npm run dev:frontend\""
+  },
+  "devDependencies": {
+    "concurrently": "^8.2.2"
+  }
+}
