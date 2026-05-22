@@ -44,7 +44,7 @@ export const TrafficGraph = () => {
             <Tooltip 
               contentStyle={{ backgroundColor: 'rgba(3, 3, 8, 0.8)', border: '1px solid rgba(255,255,255,0.1)', borderRadius: '12px', backdropFilter: 'blur(10px)' }}
               itemStyle={{ color: '#fff', fontSize: '12px', fontWeight: 600 }}
-              labelStyle={{ color: '#94a3b8', fontSize: '10px', marginBottom: '4px', tracking: 'widest' }}
+              labelStyle={{ color: '#94a3b8', fontSize: '10px', marginBottom: '4px', letterSpacing: '0.1em' }}
             />
             <Area type="monotone" dataKey="incoming" stroke="#22d3ee" strokeWidth={2} fillOpacity={1} fill="url(#colorIn)" />
             <Area type="monotone" dataKey="outgoing" stroke="#a855f7" strokeWidth={2} fillOpacity={1} fill="url(#colorOut)" />
