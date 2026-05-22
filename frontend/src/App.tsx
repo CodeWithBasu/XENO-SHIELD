@@ -1,120 +1,104 @@
+import React from 'react';
+import { motion } from 'framer-motion';
+import { Shield } from 'lucide-react';
+
+import { ThreatMeter } from './components/ThreatMeter';
+import { TrafficGraph } from './components/TrafficGraph';
+import { AlertConsole } from './components/AlertConsole';
+import { RadarVisualizer } from './components/RadarVisualizer';
+import { StatsPanel } from './components/StatsPanel';
 
 function App() {
   return (
-    <div className="min-h-screen bg-slate-950 text-emerald-400 p-6 font-mono selection:bg-emerald-500/30">
+    <div className="min-h-screen bg-[#050510] text-emerald-400 p-6 font-mono selection:bg-emerald-500/30 overflow-hidden relative">
+      
+      {/* Background Effects */}
+      <div className="fixed inset-0 pointer-events-none bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-emerald-900/20 via-[#050510] to-[#050510]" />
+      <div className="fixed inset-0 pointer-events-none opacity-[0.03] bg-[url('https://grainy-gradients.vercel.app/noise.svg')]" />
+      
       {/* Header */}
-      <header className="flex justify-between items-center mb-8 border-b border-emerald-500/50 pb-4 shadow-[0_0_15px_rgba(16,185,129,0.2)]">
-        <div className="flex items-center gap-3">
-          <div className="w-3 h-3 bg-emerald-500 rounded-full animate-pulse shadow-[0_0_10px_#10b981]"></div>
-          <h1 className="text-4xl font-bold tracking-[0.2em] text-cyan-400 drop-shadow-[0_0_5px_rgba(34,211,238,0.8)]">
-            XENO-SHIELD
-          </h1>
-        </div>
-        <div className="flex items-center gap-4 text-sm">
-          <div className="px-3 py-1 border border-emerald-500/30 rounded bg-emerald-500/10 backdrop-blur-sm">
-            STATUS: <span className="text-emerald-300 font-bold animate-pulse">ACTIVE</span>
+      <motion.header 
+        initial={{ y: -50, opacity: 0 }}
+        animate={{ y: 0, opacity: 1 }}
+        transition={{ duration: 0.8, ease: "easeOut" }}
+        className="relative flex justify-between items-center mb-8 border-b border-emerald-500/20 pb-6 z-10"
+      >
+        <div className="flex items-center gap-4">
+          <div className="relative flex items-center justify-center w-12 h-12 rounded-xl bg-emerald-950/50 border border-emerald-500/50 shadow-[0_0_15px_rgba(16,185,129,0.3)]">
+            <Shield className="text-emerald-400" size={24} />
           </div>
-          <div className="text-xs text-emerald-600/70">v1.0.0-ALPHA</div>
+          <div>
+            <h1 className="text-3xl font-black tracking-[0.3em] text-transparent bg-clip-text bg-gradient-to-r from-emerald-400 to-cyan-400 drop-shadow-[0_0_5px_rgba(34,211,238,0.5)]">
+              XENO-SHIELD
+            </h1>
+            <p className="text-emerald-500/60 text-xs tracking-widest mt-1">ALIEN INTRUSION DETECTION SYSTEM</p>
+          </div>
         </div>
-      </header>
+        
+        <div className="flex items-center gap-6">
+          <div className="flex items-center gap-2">
+            <span className="relative flex h-3 w-3">
+              <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
+              <span className="relative inline-flex rounded-full h-3 w-3 bg-emerald-500"></span>
+            </span>
+            <span className="text-emerald-400 text-sm tracking-widest border border-emerald-500/30 px-3 py-1 rounded bg-emerald-950/50">SYSTEM ACTIVE</span>
+          </div>
+          <div className="text-xs text-emerald-600/70 font-bold tracking-widest">v1.0.0-PROD</div>
+        </div>
+      </motion.header>
 
       {/* Main Grid Layout */}
-      <main className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-6">
+      <main className="relative z-10 grid grid-cols-1 lg:grid-cols-12 gap-6 h-[calc(100vh-140px)]">
         
-        {/* Threat Meter Module */}
-        <div className="col-span-1 border border-emerald-500/30 p-4 rounded-xl bg-slate-900/50 backdrop-blur-md shadow-lg shadow-emerald-500/5">
-          <h2 className="text-emerald-300 text-lg mb-4 border-b border-emerald-500/20 pb-2 flex justify-between">
-            THREAT LEVEL
-            <span className="text-xs bg-red-500/20 text-red-300 px-2 py-0.5 rounded">HIGH</span>
-          </h2>
-          <div className="h-40 flex items-center justify-center relative">
-            <div className="absolute inset-0 bg-gradient-to-t from-red-500/10 to-transparent"></div>
-            <span className="text-4xl font-bold text-red-500 animate-pulse">CRITICAL</span>
+        {/* Left Column */}
+        <motion.div 
+          initial={{ x: -50, opacity: 0 }}
+          animate={{ x: 0, opacity: 1 }}
+          transition={{ duration: 0.8, delay: 0.2 }}
+          className="lg:col-span-3 flex flex-col gap-6 h-full"
+        >
+          <ThreatMeter />
+          <div className="flex-1">
+            <AlertConsole />
           </div>
-        </div>
+        </motion.div>
 
-        {/* Traffic Monitor (Main Visual) */}
-        <div className="col-span-1 md:col-span-2 lg:col-span-2 border border-emerald-500/30 p-4 rounded-xl bg-slate-900/50 backdrop-blur-md shadow-lg shadow-emerald-500/5">
-          <h2 className="text-cyan-300 text-lg mb-4 border-b border-cyan-500/20 pb-2">
-            NETWORK TRAFFIC ANALYZER
-          </h2>
-          <div className="h-40 flex items-center justify-center border border-dashed border-emerald-500/20 rounded bg-black/20">
-            <span className="text-emerald-500/50">[ Live Waveform Visualization Area ]</span>
+        {/* Center Column */}
+        <motion.div 
+          initial={{ scale: 0.95, opacity: 0 }}
+          animate={{ scale: 1, opacity: 1 }}
+          transition={{ duration: 0.8, delay: 0.4 }}
+          className="lg:col-span-6 flex flex-col gap-6 h-full"
+        >
+          <div className="flex-1">
+            <RadarVisualizer />
           </div>
-          <div className="mt-4 grid grid-cols-3 gap-2 text-xs text-emerald-400/70">
-            <div className="bg-emerald-500/5 p-2 rounded">PKTS: 12,405</div>
-            <div className="bg-emerald-500/5 p-2 rounded">BANDWIDTH: 45 MB/s</div>
-            <div className="bg-emerald-500/5 p-2 rounded">LATENCY: 12ms</div>
+          <div className="h-[300px]">
+            <TrafficGraph />
           </div>
-        </div>
+        </motion.div>
 
-        {/* Alert Console */}
-        <div className="col-span-1 border border-emerald-500/30 p-4 rounded-xl bg-slate-900/50 backdrop-blur-md shadow-lg shadow-emerald-500/5 overflow-hidden">
-          <h2 className="text-amber-300 text-lg mb-4 border-b border-amber-500/20 pb-2">
-            ALERT CONSOLE
-          </h2>
-          <div className="h-40 overflow-y-auto text-xs space-y-2 font-mono scrollbar-thin scrollbar-thumb-emerald-500/20">
-            <div className="text-red-400 p-1 hover:bg-red-500/10 cursor-pointer border-l-2 border-red-500 pl-2">
-              [CRITICAL] DDOS attack detected from 192.168.4.22
-            </div>
-            <div className="text-amber-400 p-1 hover:bg-amber-500/10 cursor-pointer border-l-2 border-amber-500 pl-2">
-              [WARN] Port scan detected on port 8080
-            </div>
-            <div className="text-emerald-400/60 p-1 border-l-2 border-emerald-500/30 pl-2">
-              [INFO] System startup checks complete
-            </div>
-            <div className="text-emerald-400/60 p-1 border-l-2 border-emerald-500/30 pl-2">
-              [INFO] Firewall rules updated
-            </div>
-          </div>
-        </div>
-
-        {/* Attack Radar (Details from Readme) */}
-        <div className="col-span-1 md:col-span-2 lg:col-span-2 border border-emerald-500/30 p-4 rounded-xl bg-slate-900/50 backdrop-blur-md shadow-lg shadow-emerald-500/5">
-             <h2 className="text-purple-300 text-lg mb-4 border-b border-purple-500/20 pb-2">
-            ATTACK RADAR
-          </h2>
-           <div className="h-48 flex items-center justify-center border border-dashed border-purple-500/20 rounded bg-black/20">
-            <span className="text-purple-500/50">[ Radar SVG / Canvas Area ]</span>
-          </div>
-        </div>
-
-         {/* Stats Panel */}
-        <div className="col-span-1 md:col-span-1 lg:col-span-2 border border-emerald-500/30 p-4 rounded-xl bg-slate-900/50 backdrop-blur-md shadow-lg shadow-emerald-500/5">
-             <h2 className="text-blue-300 text-lg mb-4 border-b border-blue-500/20 pb-2">
-            SYSTEM HEALTH
-          </h2>
-          <div className="grid grid-cols-2 gap-4">
-             <div className="space-y-1">
-                <div className="flex justify-between text-xs text-blue-300"><span>CPU Usage</span><span>45%</span></div>
-                <div className="h-1.5 bg-blue-900/40 rounded-full overflow-hidden">
-                    <div className="h-full bg-blue-500 w-[45%]"></div>
-                </div>
-             </div>
-             <div className="space-y-1">
-                <div className="flex justify-between text-xs text-blue-300"><span>Memory</span><span>62%</span></div>
-                 <div className="h-1.5 bg-blue-900/40 rounded-full overflow-hidden">
-                    <div className="h-full bg-blue-500 w-[62%]"></div>
-                </div>
-             </div>
-             <div className="space-y-1">
-                <div className="flex justify-between text-xs text-blue-300"><span>Network Load</span><span>88%</span></div>
-                 <div className="h-1.5 bg-blue-900/40 rounded-full overflow-hidden">
-                    <div className="h-full bg-blue-500 w-[88%]"></div>
-                </div>
-             </div>
-             <div className="space-y-1">
-                <div className="flex justify-between text-xs text-blue-300"><span>Storage</span><span>22%</span></div>
-                 <div className="h-1.5 bg-blue-900/40 rounded-full overflow-hidden">
-                    <div className="h-full bg-blue-500 w-[22%]"></div>
-                </div>
+        {/* Right Column */}
+        <motion.div 
+          initial={{ x: 50, opacity: 0 }}
+          animate={{ x: 0, opacity: 1 }}
+          transition={{ duration: 0.8, delay: 0.6 }}
+          className="lg:col-span-3 flex flex-col gap-6 h-full"
+        >
+          <div className="flex-1">
+             {/* Future module space */}
+             <div className="h-full rounded-xl bg-slate-900/40 border border-slate-700/50 flex items-center justify-center opacity-50 border-dashed">
+                <span className="text-slate-500 text-xs tracking-widest font-mono">CONNECTION ESTABLISHING...</span>
              </div>
           </div>
-        </div>
+          <div className="h-[250px]">
+             <StatsPanel />
+          </div>
+        </motion.div>
 
       </main>
     </div>
-  )
+  );
 }
 
-export default App
+export default App;
